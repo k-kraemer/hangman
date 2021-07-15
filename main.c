@@ -166,8 +166,9 @@ int main(int argc, char** argv)
         {
             used_letters[game_round++] = *input;
 
+            // print used letters
             wmove(ui, USED_LETTERS, 0);
-            for (size_t i = 0; i < _ALPH_SIZE; i++)
+            for (size_t i = 0; i < sizeof(used_letters); i++)
             {
                 if(used_letters[i] == 0) break;
                 printw("%c,", used_letters[i]);
@@ -224,7 +225,7 @@ void print_hidden_word(WINDOW* ui, int x, char* word)
 /**
  * Check if the guessed letter is in the word
  * If so print the letter at the correct position
- * Return the number hits
+ * Return the number of hits
 */
 unsigned int print_found_letters(WINDOW* ui, int x, char* word, char letter)
 {
