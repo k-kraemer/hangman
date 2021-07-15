@@ -1,0 +1,9 @@
+# ignore all
+./*
+# add source files
+!*.c
+!*.h
+!utils
+# add other files
+!*md
+!LICENCE
