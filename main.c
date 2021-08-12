@@ -82,22 +82,24 @@ int main(int argc, char** argv)
     int ui_x, ui_y = 0; // Dimensions of the terminal
     int word_start_x = 0; // column for first letter of the word
 
-    if(argc < 2)
+    if(argc < 2) // if path to dict is not specified
     {
         if( dict_open("dict.txt") )
         {
-            printf("Error: Could not find a dictionary!\n");
+            printf("Error: Could not find a dictionary or it is empty!\n");
             printf("Specify the path: hangman <path to dictionary>\n");
             return -1;
         }
     }
-    else if( dict_open(argv[1]) < 0 )
+    else if( dict_open(argv[1]) )
     {
-        printf("Error: Could not open the dictionary!\n");
+        printf("Error: Could not open the dictionary or it is empty!\n");
         return -1;
     }
 
     word = dict_get_random_word();
+
+    trim_newline(word);
 
     /* Init curses */
 
@@ -115,8 +117,6 @@ int main(int argc, char** argv)
 
     getmaxyx(ui, ui_y, ui_x);
 
-    word_start_x = (int)(ui_x/2)-strlen(word);
-
     if(ui_y < 14 || ui_x < 32)
     {
         printf("Error: Need a bigger terminal!\n");
@@ -126,15 +126,14 @@ int main(int argc, char** argv)
         return -1;
     }
 
+    word_start_x = (int)(ui_x/2)-strlen(word);
+
     /* Print ui */
 
     // Print header
     attron(A_BOLD);
     mvprintw(HEADER, (int)(ui_x/2)-7, "-- HANGMAN --");
     attroff(A_BOLD);
-
-
-    trim_newline(word);
 
     print_hidden_word(ui, word_start_x, word);
 
