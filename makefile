@@ -1,5 +1,5 @@
 CC:=gcc
-CFLAGS:=-s -Wall -O2
+CFLAGS:=-s -Wall -O3
 
 all: hangman
 
